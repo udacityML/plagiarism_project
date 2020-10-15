@@ -4,14 +4,10 @@ import argparse
 import os
 import pandas as pd
 
-# sklearn.externals.joblib is deprecated in 0.21 and will be removed in 0.23. 
-# from sklearn.externals import joblib
-# Import joblib package directly
-import joblib
+from sklearn.externals import joblib
 
-## TODO: Import any additional libraries you need to define a model
-from sklearn.linear_model import LogisticRegression 
-#from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
+
 
 # Provided model load function
 def model_fn(model_dir):
@@ -42,10 +38,8 @@ if __name__ == '__main__':
     parser.add_argument('--model-dir', type=str, default=os.environ['SM_MODEL_DIR'])
     parser.add_argument('--data-dir', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
     
-    ## TODO: Add any additional arguments that you will need to pass into your model
-    parser.add_argument('--class_weight', type=str, default='balanced')
-    parser.add_argument('--solver', type=str, default='lbfgs')
-    #parser.add_argument('--n-estimators',type=int,default=5)
+    ## Add any additional arguments that you will need to pass into your model
+    parser.add_argument('--n-estimators', type=int, default=10)
     
     # args holds all passed-in arguments
     args = parser.parse_args()
@@ -62,15 +56,12 @@ if __name__ == '__main__':
     ## --- Your code here --- ##
     
 
-    ## TODO: Define a model 
-    model = LogisticRegression(class_weight=args.class_weight,solver=args.solver)
-    #model = RandomForestClassifier(n_estimators = args.n_estimators, criterion = 'entropy')
+    ## Define a model 
+    model = RandomForestClassifier(n_estimators = args.n_estimators, criterion = 'entropy')
     
     
-    ## TODO: Train the model
-    model.fit(train_x,train_y)
-    
-    
+    ## Train the model
+    model.fit(train_x, train_y)
     
     ## --- End of your code  --- ##
     
