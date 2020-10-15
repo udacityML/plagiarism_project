@@ -6,7 +6,7 @@ import pandas as pd
 
 from sklearn.externals import joblib
 
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import LinearSVC
 
 
 # Provided model load function
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     parser.add_argument('--data-dir', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
     
     ## Add any additional arguments that you will need to pass into your model
-    parser.add_argument('--n-estimators', type=int, default=10)
+    #no additional arguments for SVC necessary
     
     # args holds all passed-in arguments
     args = parser.parse_args()
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     
 
     ## Define a model 
-    model = RandomForestClassifier(n_estimators = args.n_estimators, criterion = 'entropy')
+    model = LinearSVC() #no parameterization necessary
     
     
     ## Train the model
